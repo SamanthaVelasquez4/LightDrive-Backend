@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import backend.lightdriving.backend.Dto.CarreraDto;
+import backend.lightdriving.backend.dto.CarreraDto;
 import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Cliente;
 import backend.lightdriving.backend.modelos.Conductor;
@@ -30,9 +30,10 @@ public class CarreraServiceImpl implements CarreraService{
 
     @Override
     public Carrera nvaCarrera(CarreraDto carreraDto) {
-        
+
         Cliente cliente = clienteRepository.findById(carreraDto.getIdCliente()).get();
         Conductor Conductor = ConductorRepository.findById(carreraDto.getIdConductor()).get();
+        
         if(Conductor != null && cliente != null){
             Carrera nvCarrera = new Carrera();
             nvCarrera.setLatInicio(carreraDto.getLatIncio());
@@ -51,7 +52,7 @@ public class CarreraServiceImpl implements CarreraService{
     }
 
     @Override
-    public Carrera obtenCarrera(int idCarrera) {
+    public Carrera obtenerCarrera(int idCarrera) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'obtenCarrera'");
     }

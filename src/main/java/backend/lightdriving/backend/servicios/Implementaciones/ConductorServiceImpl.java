@@ -14,11 +14,10 @@ public class ConductorServiceImpl implements ConductorService{
     @Autowired
     ConductorRepository conductorRepository;
     @Override
-    public Conductor logIn(String correo, String contrasna) {
+    public Conductor login(String correo, String contrasena) {
         Conductor Conductor = conductorRepository.findByCorreo(correo);
         if(Conductor != null){
-            String contrasena = Conductor.getContrasena();
-            if(contrasena.equals(contrasna)){
+            if(Conductor.getContrasena().equals(contrasena)){
             return Conductor;
             }
         }

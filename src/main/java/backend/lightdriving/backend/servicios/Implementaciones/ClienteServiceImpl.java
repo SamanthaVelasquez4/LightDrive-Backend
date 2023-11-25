@@ -1,48 +1,71 @@
 package backend.lightdriving.backend.servicios.Implementaciones;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import backend.lightdriving.backend.dto.LoginDto;
+import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Cliente;
 import backend.lightdriving.backend.repositorios.ClienteRepository;
 import backend.lightdriving.backend.servicios.ClienteService;
 
+@Service
 public class ClienteServiceImpl implements ClienteService{
 
     @Autowired
     ClienteRepository clienteRepository;
 
     @Override
-    public Cliente logIn(String correo, String contrasna) {
-        Cliente cliente = clienteRepository.findByCorreo(correo);
+    public boolean crearCliente(Cliente cliente) {
+        
         if(cliente != null){
-            String contrasena = cliente.getContrasena();
-            if(contrasena.equals(contrasna)){
-            return cliente;
-            }
+            clienteRepository.save(cliente);
+            return true;
         }
-        return null;
-    }
 
+        return false;
+    }
+    
     @Override
-    public Cliente crearCliente(Cliente cliente) {
-        return clienteRepository.save(cliente);
+    public Cliente login(LoginDto login) {
+
+        if(login != null){
+            
+            List<Cliente> clientes= this.clienteRepository.findAll();
+
+            for (Cliente cliente : clientes) {
+                if(cliente.getContrasena().equals(login.getContrasena()) && cliente.getCorreo().equals(login.getCorreo())){
+                    cliente.setContrasena(null);
+                    return cliente;
+                }
+            }
+            
+        }
+
+        return null;
+        
     }
 
     @Override
     public boolean eliminarCliente(int idCliente) {
-        Cliente Cliente = clienteRepository.findById(idCliente).get();
-        if(Cliente != null) {
+
+        if(this.clienteRepository.existsById(idCliente)){
+            Cliente Cliente = clienteRepository.findById(idCliente).get();
             clienteRepository.delete(Cliente);
             return true;
         }
+        
         return false;
     }
 
     @Override
     public boolean actualizarCliente(int idCliente, Cliente cliente) {
-        Cliente Cliente1 = clienteRepository.findById(idCliente).get();
-        if(Cliente1 != null) {
+
+        if(this.clienteRepository.existsById(idCliente)){
+            Cliente Cliente1 = clienteRepository.findById(idCliente).get();
             Cliente1.setNombre(cliente.getNombre());
             Cliente1.setApellido(cliente.getApellido());
             Cliente1.setCorreo(cliente.getCorreo());
@@ -51,12 +74,31 @@ public class ClienteServiceImpl implements ClienteService{
             clienteRepository.save(Cliente1);
             return true;
         }
+
         return false;
     }
 
     @Override
     public Cliente obtenerCliente(int idCliente) {
-        return clienteRepository.findById(idCliente).get();
+
+        if(this.clienteRepository.existsById(idCliente)){
+            Cliente cliente= clienteRepository.findById(idCliente).get();
+            cliente.setContrasena(null);
+           return cliente;
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Carrera> obtenerCarreras(int idCliente) {
+        if(this.clienteRepository.existsById(idCliente)){
+
+           return clienteRepository.findById(idCliente).get().getCarreras();
+            
+        }
+
+        return null;
     }
     
 }

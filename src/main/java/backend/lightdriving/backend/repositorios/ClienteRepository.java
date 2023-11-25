@@ -6,5 +6,4 @@ import backend.lightdriving.backend.modelos.Cliente;
 
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
-    Cliente findByCorreo(String correo);
 }

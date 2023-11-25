@@ -1,4 +1,4 @@
-package backend.lightdriving.backend.Dto;
+package backend.lightdriving.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,20 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class CarreraDto {
+
     private double latIncio;
+
     private double lngInicio;
+
     private double latFinal;
+
     private double lngFinal;
+
     private int estado;
+
     private int idConductor;
+    
     private int idCliente;
 }
