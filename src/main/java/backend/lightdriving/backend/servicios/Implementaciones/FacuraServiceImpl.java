@@ -13,21 +13,6 @@ public class FacuraServiceImpl implements FacturaService {
     FacturaRepository facturaRepository;
 
     @Override
-    public Factura crearFactura(Factura Factura) {
-        return facturaRepository.save(Factura);
-    }
-
-    @Override
-    public boolean eliminarFactura(int idFactura) {
-        Factura factura = facturaRepository.findById(idFactura).get();
-        if(factura != null) {
-            facturaRepository.delete(factura);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public boolean actualizarFactura(int idFactura, Factura Factura) {
         Factura factura1 = facturaRepository.findById(idFactura).get();
         if(factura1 != null) {
