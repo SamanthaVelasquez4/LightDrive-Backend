@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import backend.lightdriving.backend.modelos.MetodoPago;
 import backend.lightdriving.backend.servicios.Implementaciones.MetodoPagoServiceImpl;
-import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/api/metodoPago")
