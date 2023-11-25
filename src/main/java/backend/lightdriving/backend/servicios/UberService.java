@@ -1,14 +1,14 @@
 package backend.lightdriving.backend.servicios;
 
+import backend.lightdriving.backend.dto.ActualizarUberDto;
+import backend.lightdriving.backend.dto.UberDto;
 import backend.lightdriving.backend.modelos.Uber;
 
 public interface UberService {
 
-    public Uber crearUber(Uber Uber);
+    public boolean actualizarUber(int idUber, ActualizarUberDto uber);
 
-    public boolean eliminarUber(int idUber);
-
-    public boolean actualizarUber(int idUber, Uber Uber);
+    public boolean cambiarCarro(int idUber, UberDto uber);
 
     public Uber obtenerUber(int idUber);
 }
