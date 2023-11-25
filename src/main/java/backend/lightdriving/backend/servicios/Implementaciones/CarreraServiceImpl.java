@@ -74,17 +74,5 @@ public class CarreraServiceImpl implements CarreraService{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'cambiarEstadoCarrera'");
     }
-
-    @Override
-    public List<Cliente> obtenerCarrerasPorCliente(int idCliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerCarrerasPorCliente'");
-    }
-
-    @Override
-    public List<Conductor> obtenerCarrerasPorConductor(int idConductor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerCarrerasPorConductor'");
-    }
     
 }

@@ -19,7 +19,4 @@ public interface CarreraService {
 
     public boolean cambiarEstadoCarrera(int estado);
 
-    public List<Cliente> obtenerCarrerasPorCliente(int idCliente);
-
-    public List<Conductor> obtenerCarrerasPorConductor(int idConductor);
 }
