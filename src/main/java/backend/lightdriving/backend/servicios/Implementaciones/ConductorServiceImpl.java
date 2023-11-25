@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import backend.lightdriving.backend.dto.ActualizarConductorDto;
 import backend.lightdriving.backend.dto.ConductorDto;
 import backend.lightdriving.backend.dto.LoginDto;
+import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Conductor;
 import backend.lightdriving.backend.modelos.HistoricoUber;
 import backend.lightdriving.backend.modelos.TipoUber;
@@ -142,6 +143,17 @@ public class ConductorServiceImpl implements ConductorService{
         }
         
         return null;
+    }
+
+    @Override
+    public List<Carrera> obtenerCarreras(int idConductor) {
+        if(this.conductorRepository.existsById(idConductor)){
+
+            return conductorRepository.findById(idConductor).get().getCarreras();
+             
+         }
+ 
+         return null;
     }
 
 }
