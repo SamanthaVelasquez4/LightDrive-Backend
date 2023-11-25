@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import backend.lightdriving.backend.modelos.Conductor;
 
 public interface ConductorRepository extends JpaRepository<Conductor,Integer>{
-    Conductor findByCorreo(String correo);
 }

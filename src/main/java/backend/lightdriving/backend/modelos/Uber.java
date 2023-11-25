@@ -1,5 +1,7 @@
 package backend.lightdriving.backend.modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,6 +47,7 @@ public class Uber {
     @JoinColumn(name = "idtipouber", referencedColumnName = "idtipouber")
     private TipoUber tipoUber;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "uber")
     private Conductor conductor;
 }
