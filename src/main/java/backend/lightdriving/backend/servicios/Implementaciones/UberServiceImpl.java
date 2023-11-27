@@ -153,8 +153,8 @@ public class UberServiceImpl implements UberService{
 
         return UbersEnRango;
     }
-    
-    private double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
+
+    public double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
         // Convierte grados a radianes
         lat1 = Math.toRadians(lat1);
         lon1 = Math.toRadians(lon1);
