@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import backend.lightdriving.backend.dto.ActualizarConductorDto;
 import backend.lightdriving.backend.dto.ConductorDto;
+import backend.lightdriving.backend.dto.ConductoresCercaDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Conductor;
@@ -55,5 +56,10 @@ public class ConductorController {
     @GetMapping("/obtenerCarreras/{idConductor}")
     public List<Carrera> obtenerCarreras(@PathVariable (name = "idConductor") int idConductor){
         return this.conductorServiceImpl.obtenerCarreras(idConductor);
+    }
+
+    @GetMapping("/conductoresCercanos")
+    public List<Conductor> obtenerConductoresCercanos(@RequestBody ConductoresCercaDto conductores){
+        return this.conductorServiceImpl.obtenerConductoresCercanos(conductores);
     }
 }

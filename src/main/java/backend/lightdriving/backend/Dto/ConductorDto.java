@@ -29,4 +29,8 @@ public class ConductorDto {
     private Date fechaNacimiento;
 
     private UberDto uber;
+
+    private double ubicacionLat;
+
+    private double ubicacionLong;
 }
