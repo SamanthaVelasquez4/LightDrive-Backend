@@ -45,6 +45,12 @@ public class Carrera {
 
     private int estado;
 
+    @Column(name = "ubicacioninicial")
+    private String ubicacionInicial;
+
+    @Column(name = "ubicacionfinal")
+    private String ubicacionFinal;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idconductor", referencedColumnName = "idconductor")

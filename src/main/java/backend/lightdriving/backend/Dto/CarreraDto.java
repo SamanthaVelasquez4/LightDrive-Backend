@@ -25,4 +25,9 @@ public class CarreraDto {
     private int idCliente;
 
     private int metodoPago;
+
+    private String ubicacionInicial;
+
+    private String ubicacionFinal;
+
 }

@@ -55,6 +55,8 @@ public class CarreraServiceImpl implements CarreraService{
             nvCarrera.setLngInicio(carreraDto.getLngInicio());
             nvCarrera.setLngFinal(carreraDto.getLngFinal());
             nvCarrera.setEstado(0);
+            nvCarrera.setUbicacionInicial(carreraDto.getUbicacionInicial());
+            nvCarrera.setUbicacionFinal(carreraDto.getUbicacionFinal());
             //Se crea una factura
             Factura factura = new Factura();
             factura.setCarrera(nvCarrera);
