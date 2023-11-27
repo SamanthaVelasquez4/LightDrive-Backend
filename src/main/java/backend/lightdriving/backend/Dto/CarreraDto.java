@@ -24,5 +24,5 @@ public class CarreraDto {
     
     private int idCliente;
 
-    private int matodo
+    private int metodoPago;
 }
