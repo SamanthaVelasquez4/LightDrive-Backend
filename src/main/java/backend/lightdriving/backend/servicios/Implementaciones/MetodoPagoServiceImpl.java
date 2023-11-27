@@ -38,7 +38,7 @@ public class MetodoPagoServiceImpl implements MetodoPagoService{
 
     @Override
     public boolean actualizarMetodoPago(int idMetodoPago, MetodoPago metodoPago) {
-        if(metodoPago != null){
+        if(this.metodoPagoRepository.existsById(idMetodoPago)){
             MetodoPago metodoPago2= this.metodoPagoRepository.findById(idMetodoPago).get();
             metodoPago2.setDescripcion(metodoPago.getDescripcion());
             return true;

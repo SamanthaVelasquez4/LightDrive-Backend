@@ -12,7 +12,7 @@ import lombok.Setter;
 
 public class CarreraDto {
 
-    private double latIncio;
+    private double latInicio;
 
     private double lngInicio;
 
@@ -20,9 +20,9 @@ public class CarreraDto {
 
     private double lngFinal;
 
-    private int estado;
-
     private int idConductor;
     
     private int idCliente;
+
+    private int matodo
 }

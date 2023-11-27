@@ -74,7 +74,7 @@ public class ZonaRestringidaImpl implements ZonaRestringidaService{
             RespuestaDto respuesta= new RespuestaDto(false, "Punto de inicio ubicado en zona restringida");
             return respuesta;
         }
-
+ 
         if(!verificarPosicion(coordenadaFinal)){
             RespuestaDto respuesta= new RespuestaDto(false, "Punto de destino ubicado en zona restringida");
             return respuesta;
