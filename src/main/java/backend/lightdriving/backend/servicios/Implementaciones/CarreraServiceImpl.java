@@ -167,5 +167,4 @@ public class CarreraServiceImpl implements CarreraService{
     public List<Carrera> obtenerTodo() {
         return this.carreraRepository.findAll();
     }
-    
 }
