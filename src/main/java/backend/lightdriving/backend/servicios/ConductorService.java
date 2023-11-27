@@ -4,7 +4,6 @@ import java.util.List;
 
 import backend.lightdriving.backend.dto.ActualizarConductorDto;
 import backend.lightdriving.backend.dto.ConductorDto;
-import backend.lightdriving.backend.dto.ConductoresCercaDto;
 import backend.lightdriving.backend.dto.CoordenadaDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;

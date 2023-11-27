@@ -173,14 +173,15 @@ public class ConductorServiceImpl implements ConductorService{
         double longitudMax = Math.toDegrees(longitudRad + (radioEnKm / radioTierra));
 
         // Consultar conductores dentro del cuadro delimitador
-        List<Conductor> conductoresEnRango = conductorRepository.findByUbicacionLatBetweenAndUbicacionLongBetween(
+       /* List<Conductor> conductoresEnRango = conductorRepository.findByUbicacionLatBetweenAndUbicacionLongBetween(
                 latitudMin, latitudMax, longitudMin, longitudMax);
 
         // Filtrar conductores dentro del radio
         conductoresEnRango.removeIf(conductor ->
                 calcularDistancia(coordenadaDto.getLat(), coordenadaDto.getLng(), conductor.getUber().getLat(), conductor.getUber().getLng()) > radioEnKm);
 
-        return conductoresEnRango;
+        return conductoresEnRango;*/
+        return null;
     }
 
     private double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {

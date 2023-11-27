@@ -7,6 +7,6 @@ import java.util.List;
 
 
 public interface ConductorRepository extends JpaRepository<Conductor,Integer>{
-    List<Conductor> findByUbicacionLatBetweenAndUbicacionLongBetween(
-        double latitudMin, double latitudMax, double longitudMin, double longitudMax);
+   /* List<Conductor> findByUbicacionLatBetweenAndUbicacionLongBetween(
+        double latitudMin, double latitudMax, double longitudMin, double longitudMax);*/
 }
