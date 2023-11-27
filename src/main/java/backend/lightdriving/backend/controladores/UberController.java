@@ -1,5 +1,7 @@
 package backend.lightdriving.backend.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.lightdriving.backend.dto.ActualizarUberDto;
+import backend.lightdriving.backend.dto.CoordenadaDto;
 import backend.lightdriving.backend.dto.UberDto;
 import backend.lightdriving.backend.modelos.Uber;
 import backend.lightdriving.backend.servicios.Implementaciones.UberServiceImpl;
@@ -34,5 +37,11 @@ public class UberController {
     @PutMapping("/cambiarCarro/{idUber}")
     public boolean cambiarCarro(@PathVariable (name = "idUber") int idUber, @RequestBody UberDto uber){
         return this.uberServiceImpl.cambiarCarro(idUber, uber);
+    }
+
+    
+    @GetMapping("/ubersCercanos")
+    public List<Uber> obtenerConductoresCercanos(@RequestBody CoordenadaDto conductores){
+        return this.uberServiceImpl.obtenerUbersCercanos(conductores);
     }
 }
