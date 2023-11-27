@@ -4,6 +4,7 @@ import java.util.List;
 
 import backend.lightdriving.backend.dto.ActualizarConductorDto;
 import backend.lightdriving.backend.dto.ConductorDto;
+import backend.lightdriving.backend.dto.ConductoresCercaDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Conductor;
@@ -21,5 +22,7 @@ public interface ConductorService {
     public Conductor obtenerConductor(int idConductor);
 
     public List<Carrera> obtenerCarreras (int idConductor);
+
+    public List<Conductor> obtenerConductoresCercanos(ConductoresCercaDto conductoresCercaDto);
     
 }

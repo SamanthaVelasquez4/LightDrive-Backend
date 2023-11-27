@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import backend.lightdriving.backend.dto.ActualizarConductorDto;
 import backend.lightdriving.backend.dto.ConductorDto;
+import backend.lightdriving.backend.dto.ConductoresCercaDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Conductor;
@@ -52,6 +53,8 @@ public class ConductorServiceImpl implements ConductorService{
                 nuevConductor.setFechaNacimiento(conductor.getFechaNacimiento());
                 nuevConductor.setNombre(conductor.getNombre());
                 nuevConductor.setTelefono(conductor.getTelefono());
+                nuevConductor.setUbicacionLat(conductor.getUbicacionLat());
+                nuevConductor.setUbicacionLong(conductor.getUbicacionLong());
 
                 //llenar infor uber
                 nuevUber.setAnio(conductor.getUber().getAnio());
@@ -154,6 +157,56 @@ public class ConductorServiceImpl implements ConductorService{
          }
  
          return null;
+    }
+
+    @Override
+    public List<Conductor> obtenerConductoresCercanos(ConductoresCercaDto conductoresCercaDto) {
+        double latitudRad = Math.toRadians(conductoresCercaDto.getLatInicio());
+        double longitudRad = Math.toRadians(conductoresCercaDto.getLngInicio());
+
+        // Radio de la Tierra en kilómetros
+        double radioTierra = 6371.0;
+        double radioEnKm = 4;
+
+        // Calcular las coordenadas del cuadro delimitador alrededor del punto central
+        double latitudMin = Math.toDegrees(latitudRad - (radioEnKm / radioTierra));
+        double latitudMax = Math.toDegrees(latitudRad + (radioEnKm / radioTierra));
+        double longitudMin = Math.toDegrees(longitudRad - (radioEnKm / radioTierra));
+        double longitudMax = Math.toDegrees(longitudRad + (radioEnKm / radioTierra));
+
+        // Consultar conductores dentro del cuadro delimitador
+        List<Conductor> conductoresEnRango = conductorRepository.findByUbicacionLatBetweenAndUbicacionLongBetween(
+                latitudMin, latitudMax, longitudMin, longitudMax);
+
+        // Filtrar conductores dentro del radio
+        conductoresEnRango.removeIf(conductor ->
+                calcularDistancia(conductoresCercaDto.getLatInicio(), conductoresCercaDto.getLngInicio(), conductor.getUbicacionLat(), conductor.getUbicacionLong()) > radioEnKm);
+
+        return conductoresEnRango;
+    }
+
+    private double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
+        // Convierte grados a radianes
+        lat1 = Math.toRadians(lat1);
+        lon1 = Math.toRadians(lon1);
+        lat2 = Math.toRadians(lat2);
+        lon2 = Math.toRadians(lon2);
+
+        // Diferencia de latitud y longitud
+        double dLat = lat2 - lat1;
+        double dLon = lon2 - lon1;
+
+        // Fórmula de Haversine
+        double a = Math.pow(Math.sin(dLat / 2), 2) +
+                   Math.cos(lat1) * Math.cos(lat2) *
+                   Math.pow(Math.sin(dLon / 2), 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        // Calcula la distancia; radio tierra=6371
+        double distancia = 6371 * c;
+        System.out.println(distancia);
+        return distancia;
     }
 
 }

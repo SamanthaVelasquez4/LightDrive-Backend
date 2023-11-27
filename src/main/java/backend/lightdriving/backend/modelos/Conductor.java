@@ -57,4 +57,8 @@ public class Conductor {
 
     @OneToMany(mappedBy = "conductor")
     private List<Carrera> carreras;
+
+    private double ubicacionLat;
+
+    private double ubicacionLong;
 }
