@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.lightdriving.backend.dto.FacturasClienteDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Cliente;
@@ -31,7 +32,7 @@ public class ClienteController {
     }
 
     @GetMapping("/login")
-    public Cliente login(@RequestBody LoginDto login){
+    public FacturasClienteDto login(@RequestBody LoginDto login){
         return this.clienteServiceImpl.login(login);
     }
 
