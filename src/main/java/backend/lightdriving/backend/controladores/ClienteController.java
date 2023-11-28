@@ -58,7 +58,7 @@ public class ClienteController {
     }
 
     @GetMapping("/obtenerUbicacion/{idCliente}")
-    public CoordenadaDto obtenerUbicacion(int idCliente){
-        return this.obtenerUbicacion(idCliente);
+    public CoordenadaDto obtenerUbicacion(@PathVariable (name = "idCliente" ) int idCliente){
+        return this.clienteServiceImpl.obtenerUbicacion(idCliente);
     }
 }
