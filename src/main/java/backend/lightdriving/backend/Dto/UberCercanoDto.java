@@ -34,5 +34,7 @@ public class UberCercanoDto {
     private double lng;
 
     private String ubicacionNombre;
+
+    private double total;
     
 }

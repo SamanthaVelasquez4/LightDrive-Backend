@@ -166,13 +166,13 @@ public class UberServiceImpl implements UberService{
         //obtener ubers cercanos
         List<Uber> ubersEncontrados=this.obtenerUbersCercanos(coordenadaInicio);
         List<UberCercanoDto> ubers= new ArrayList<>();
+        double distaciaRecorrida= this.calcularDistancia(ruta.getLatInicio(), ruta.getLngInicio(), ruta.getLatFinal(), ruta.getLngFinal());
 
         if(ubersEncontrados.size()>0){
             for (Uber uber : ubersEncontrados) {
                 //filtrar ubers disponibles
                 if(uber.getConductor().getDisponible()){
                     UberCercanoDto uberCercanoDto = new UberCercanoDto();
-
                     uberCercanoDto.setApellido(uber.getConductor().getApellido());
                     uberCercanoDto.setColor(uber.getColor());
                     uberCercanoDto.setIdConductor(uber.getConductor().getIdConductor());
@@ -184,6 +184,11 @@ public class UberServiceImpl implements UberService{
                     uberCercanoDto.setTelefono(uber.getConductor().getTelefono());
                     uberCercanoDto.setTipoUber(uber.getTipoUber());
                     uberCercanoDto.setUbicacionNombre(uber.getUbicacionNombre());
+
+                    //Calcular distancia
+                    double total= this.calcularTotal(uber.getTipoUber(), distaciaRecorrida);
+                    uberCercanoDto.setTotal(Math.ceil(total));
+
                     ubers.add(uberCercanoDto);
                 }
             }
@@ -215,6 +220,11 @@ public class UberServiceImpl implements UberService{
                 uberCercanoDto.setTelefono(uber.getConductor().getTelefono());
                 uberCercanoDto.setTipoUber(uber.getTipoUber());
                 uberCercanoDto.setUbicacionNombre(uber.getUbicacionNombre());
+
+                //Calcular distancia
+                double total= this.calcularTotal(uber.getTipoUber(), distaciaRecorrida);
+                uberCercanoDto.setTotal(Math.ceil(total));
+
                 ubers.add(uberCercanoDto);
             }
         }
@@ -298,4 +308,16 @@ public class UberServiceImpl implements UberService{
         return distancia;
     }
     
+    public double calcularTotal(TipoUber tipoUber, double distaciaRecorrida){
+
+        double total=0;
+
+        if(distaciaRecorrida>3){
+            total = tipoUber.getPrecioBase() + (distaciaRecorrida-3)*tipoUber.getPrecioXkm();
+        }else{
+            total = tipoUber.getPrecioBase();
+        }
+
+        return total;
+    }
 }
