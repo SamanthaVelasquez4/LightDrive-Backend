@@ -1,5 +1,6 @@
 package backend.lightdriving.backend.servicios.Implementaciones;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -65,7 +66,8 @@ public class FacturaServiceImpl implements FacturaService {
                 if(factura.getCarrera().getCliente().getIdCliente()== idCliente){
                     FacturaDto facturaDto= new FacturaDto();
                     facturaDto.setCarrera(factura.getCarrera().getIdCarrera());
-                    facturaDto.setFecha(factura.getFecha());
+                    SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
+                    facturaDto.setFecha(dt.format(factura.getFecha()));
                     facturaDto.setMetodoPago(factura.getMetodoPago().getDescripcion());
                     facturaDto.setTotal(factura.getTotal());
                     if(factura.getCarrera().getEstado()==0){

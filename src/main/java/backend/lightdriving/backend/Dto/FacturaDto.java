@@ -18,7 +18,7 @@ public class FacturaDto {
 
     private double total;
 
-    private Date fecha;
+    private String fecha;
 
     private int carrera;
 

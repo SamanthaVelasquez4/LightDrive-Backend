@@ -1,6 +1,7 @@
 package backend.lightdriving.backend.servicios.Implementaciones;
 
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,8 @@ public class ClienteServiceImpl implements ClienteService{
                         if(factura.getCarrera().getCliente().getIdCliente()== cliente.getIdCliente()){
                             FacturaDto facturaDto= new FacturaDto();
                             facturaDto.setCarrera(factura.getCarrera().getIdCarrera());
-                            facturaDto.setFecha(factura.getFecha());
+                            SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
+                            facturaDto.setFecha(dt.format(factura.getFecha()));
                             facturaDto.setMetodoPago(factura.getMetodoPago().getDescripcion());
                             facturaDto.setTotal(factura.getTotal());
                             facturaDto.setIdFactura(factura.getIdFactura());
