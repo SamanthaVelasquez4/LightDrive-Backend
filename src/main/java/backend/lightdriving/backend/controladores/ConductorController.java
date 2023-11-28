@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import backend.lightdriving.backend.dto.ActualizarConductorDto;
 import backend.lightdriving.backend.dto.ConductorDto;
+import backend.lightdriving.backend.dto.ConductorLoginDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Conductor;
@@ -33,7 +34,7 @@ public class ConductorController {
     } 
 
     @GetMapping("/login")
-    public Conductor login(@RequestBody LoginDto login){
+    public ConductorLoginDto login(@RequestBody LoginDto login){
         return this.conductorServiceImpl.login(login);
     }
 

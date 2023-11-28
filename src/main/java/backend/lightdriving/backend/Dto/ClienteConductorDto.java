@@ -1,5 +1,6 @@
 package backend.lightdriving.backend.dto;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,18 +11,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class FacturaDto {
+public class ClienteConductorDto {
 
-    private int idFactura;
+    private int idCliente;
 
-    private double total;
+    private String nombre;
 
-    private String fecha;
+    private String apellido;
 
-    private int carrera;
+    private String telefono;
 
-    private String metodoPago;
-
-    private String estadoCarrera;
-    
 }
