@@ -59,6 +59,7 @@ public class ConductorServiceImpl implements ConductorService{
                 nuevUber.setConductor(nuevConductor);
                 nuevUber.setLat(conductor.getUber().getLat());
                 nuevUber.setLng(conductor.getUber().getLng());
+                nuevUber.setUbicacionNombre(conductor.getUber().getUbicacionNombre());
                 nuevUber.setMarca(conductor.getUber().getMarca());
                 nuevUber.setPlaca(conductor.getUber().getPlaca());
                 tipoUberEncontrado.setIdTipoUber(conductor.getUber().getTipoUber());

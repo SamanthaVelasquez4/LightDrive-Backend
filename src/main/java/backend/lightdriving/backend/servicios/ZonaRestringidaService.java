@@ -14,8 +14,6 @@ public interface ZonaRestringidaService {
     public boolean actualizarZonaRestringida(int idZonaRestringida, ZonaRestringida zonaRestringida);
     
     public ZonaRestringida obtenerZonaRestringida(int idZonaRestringida);
-    
-    public RespuestaDto verificarRuta(VerificarRutaDto ruta);
 
     public boolean verificarPosicion (CoordenadaDto coordenada);
 }

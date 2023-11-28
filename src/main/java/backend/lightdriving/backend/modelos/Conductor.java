@@ -36,14 +36,14 @@ public class Conductor {
 
     private String apellido;
 
+    private boolean disponible;
+
     @Column(unique = true)
     private String correo;
 
     private String telefono;
 
     private String contrasena;
-
-    private boolean disponible;
 
     @Column(name = "fechanacimiento")
     private Date fechaNacimiento;
@@ -57,4 +57,9 @@ public class Conductor {
 
     @OneToMany(mappedBy = "conductor")
     private List<Carrera> carreras;
+
+    public boolean getDisponible() {
+        return disponible;
+    }
+
 }

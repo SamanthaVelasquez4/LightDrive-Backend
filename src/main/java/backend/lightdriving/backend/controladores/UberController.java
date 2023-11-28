@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import backend.lightdriving.backend.dto.ActualizarUberDto;
 import backend.lightdriving.backend.dto.CoordenadaDto;
+import backend.lightdriving.backend.dto.RespuestaDto;
 import backend.lightdriving.backend.dto.UberDto;
+import backend.lightdriving.backend.dto.VerificarRutaDto;
 import backend.lightdriving.backend.modelos.Uber;
 import backend.lightdriving.backend.servicios.Implementaciones.UberServiceImpl;
 
@@ -41,7 +43,8 @@ public class UberController {
 
     
     @GetMapping("/ubersCercanos")
-    public List<Uber> obtenerConductoresCercanos(@RequestBody CoordenadaDto conductores){
-        return this.uberServiceImpl.obtenerUbersCercanos(conductores);
+    public RespuestaDto obtenerUbersCliente(@RequestBody VerificarRutaDto ruta){
+        return this.uberServiceImpl.obtenerUbersCliente(ruta);
     }
+
 }

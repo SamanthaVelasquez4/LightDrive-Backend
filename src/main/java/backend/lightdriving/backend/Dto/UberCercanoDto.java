@@ -1,18 +1,25 @@
 package backend.lightdriving.backend.dto;
 
+import backend.lightdriving.backend.modelos.TipoUber;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class UberDto {
+public class UberCercanoDto {
+    
+    private int idConductor;
 
-    private int idUber;
+    private String nombre;
+
+    private String apellido;
+
+    private String telefono;
 
     private String marca;
 
@@ -20,14 +27,12 @@ public class UberDto {
 
     private String placa;
 
-    private int anio;
+    private TipoUber tipoUber;
 
     private double lat;
 
     private double lng;
 
-    private int tipoUber;
-
     private String ubicacionNombre;
-
+    
 }

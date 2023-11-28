@@ -43,11 +43,6 @@ public class ZonaRestringidaController {
     public ZonaRestringida obtenerZonaRestringida(@PathVariable (name = "idZonaRestringida") int idZonaRestringida){
         return this.zonaRestringidaImpl.obtenerZonaRestringida(idZonaRestringida);
     }
-
-    @GetMapping("/verificarRuta")
-    public RespuestaDto verificarRuta(@RequestBody VerificarRutaDto ruta){
-        return this.zonaRestringidaImpl.verificarRuta(ruta);
-    }
     
     @GetMapping("/verificar")
     public boolean verificarPosicion(@RequestBody CoordenadaDto coordenada){

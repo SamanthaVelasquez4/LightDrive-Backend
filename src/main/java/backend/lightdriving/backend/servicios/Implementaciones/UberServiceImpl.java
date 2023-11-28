@@ -1,5 +1,6 @@
 package backend.lightdriving.backend.servicios.Implementaciones;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,15 +9,20 @@ import org.springframework.stereotype.Service;
 
 import backend.lightdriving.backend.dto.ActualizarUberDto;
 import backend.lightdriving.backend.dto.CoordenadaDto;
+import backend.lightdriving.backend.dto.RespuestaDto;
+import backend.lightdriving.backend.dto.UberCercanoDto;
 import backend.lightdriving.backend.dto.UberDto;
+import backend.lightdriving.backend.dto.VerificarRutaDto;
 import backend.lightdriving.backend.modelos.Conductor;
 import backend.lightdriving.backend.modelos.HistoricoUber;
 import backend.lightdriving.backend.modelos.TipoUber;
 import backend.lightdriving.backend.modelos.Uber;
+import backend.lightdriving.backend.modelos.ZonaRestringida;
 import backend.lightdriving.backend.repositorios.ConductorRepository;
 import backend.lightdriving.backend.repositorios.HistoricoUberRepository;
 import backend.lightdriving.backend.repositorios.TipoUberRepository;
 import backend.lightdriving.backend.repositorios.UberRepository;
+import backend.lightdriving.backend.repositorios.ZonaRestringidaRepository;
 import backend.lightdriving.backend.servicios.UberService;
 
 @Service
@@ -33,6 +39,9 @@ public class UberServiceImpl implements UberService{
 
     @Autowired
     private ConductorRepository conductorRepository;
+
+    @Autowired
+    private ZonaRestringidaRepository zonaRestringidaRepository;
 
     @Override
     public boolean actualizarUber(int idUber, ActualizarUberDto uber) {
@@ -100,10 +109,12 @@ public class UberServiceImpl implements UberService{
             nuevUber.setConductor(uberActual.getConductor());
             nuevUber.setLat(uber.getLat());
             nuevUber.setLng(uber.getLng());
+            nuevUber.setUbicacionNombre(uber.getUbicacionNombre());
             nuevUber.setMarca(uber.getMarca());
             nuevUber.setPlaca(uber.getPlaca());
             tipoUberEncontrado.setIdTipoUber(uber.getTipoUber());
             nuevUber.setTipoUber(tipoUberEncontrado);
+            
 
             conductor.setUber(nuevUber);
             this.conductorRepository.save(conductor);
@@ -128,7 +139,116 @@ public class UberServiceImpl implements UberService{
         return false;
     }
 
+    
     @Override
+    public RespuestaDto obtenerUbersCliente(VerificarRutaDto ruta) {
+
+        CoordenadaDto coordenadaInicio = new CoordenadaDto(ruta.getLatInicio(), ruta.getLngInicio(), null);
+        CoordenadaDto coordenadaFinal = new CoordenadaDto(ruta.getLatFinal(), ruta.getLngFinal(), null);
+        RespuestaDto respuesta= new RespuestaDto();
+
+        //Verificar posicion de inicio
+        if(!verificarPosicion(coordenadaInicio)){
+            respuesta.setExito(false);
+            respuesta.setMensaje("Punto de inicio ubicado en zona restringida");
+            respuesta.setUbers(null);
+            return respuesta;
+        }
+ 
+        //verificar posicion final
+        if(!verificarPosicion(coordenadaFinal)){
+            respuesta.setExito(false);
+            respuesta.setMensaje("Punto de destino ubicado en zona restringida");
+            respuesta.setUbers(null);
+            return respuesta;
+        }
+
+        //obtener ubers cercanos
+        List<Uber> ubersEncontrados=this.obtenerUbersCercanos(coordenadaInicio);
+        List<UberCercanoDto> ubers= new ArrayList<>();
+
+        if(ubersEncontrados.size()>0){
+            for (Uber uber : ubersEncontrados) {
+                //filtrar ubers disponibles
+                if(uber.getConductor().getDisponible()){
+                    UberCercanoDto uberCercanoDto = new UberCercanoDto();
+
+                    uberCercanoDto.setApellido(uber.getConductor().getApellido());
+                    uberCercanoDto.setColor(uber.getColor());
+                    uberCercanoDto.setIdConductor(uber.getConductor().getIdConductor());
+                    uberCercanoDto.setLat(uber.getLat());
+                    uberCercanoDto.setLng(uber.getLng());
+                    uberCercanoDto.setMarca(uber.getMarca());
+                    uberCercanoDto.setNombre(uber.getConductor().getNombre());
+                    uberCercanoDto.setPlaca(uber.getPlaca());
+                    uberCercanoDto.setTelefono(uber.getConductor().getTelefono());
+                    uberCercanoDto.setTipoUber(uber.getTipoUber());
+                    uberCercanoDto.setUbicacionNombre(uber.getUbicacionNombre());
+                    ubers.add(uberCercanoDto);
+                }
+            }
+
+            if(ubers.size()>0){
+                respuesta.setExito(true);
+                respuesta.setMensaje("Ubers encontrados");
+                respuesta.setUbers(ubers);
+                return respuesta;
+            }
+            
+        }
+
+        //No hay ubers cercanos disponibles -> mandar todos los ubers disponibles
+        List<Uber> todosUbers = this.uberRepository.findAll();
+        for (Uber uber : todosUbers) {
+            if(uber.getConductor().getDisponible()){
+
+                UberCercanoDto uberCercanoDto = new UberCercanoDto();
+
+                uberCercanoDto.setApellido(uber.getConductor().getApellido());
+                uberCercanoDto.setColor(uber.getColor());
+                uberCercanoDto.setIdConductor(uber.getConductor().getIdConductor());
+                uberCercanoDto.setLat(uber.getLat());
+                uberCercanoDto.setLng(uber.getLng());
+                uberCercanoDto.setMarca(uber.getMarca());
+                uberCercanoDto.setNombre(uber.getConductor().getNombre());
+                uberCercanoDto.setPlaca(uber.getPlaca());
+                uberCercanoDto.setTelefono(uber.getConductor().getTelefono());
+                uberCercanoDto.setTipoUber(uber.getTipoUber());
+                uberCercanoDto.setUbicacionNombre(uber.getUbicacionNombre());
+                ubers.add(uberCercanoDto);
+            }
+        }
+
+        if(ubers.size()>0){
+            respuesta.setExito(true);
+            respuesta.setMensaje("No se encontraron ubers cercanos");
+            respuesta.setUbers(ubers);
+            return respuesta;
+        }
+        
+        //no hay ubers disponibles
+        respuesta.setExito(false);
+        respuesta.setMensaje("No hay ubers disponibles");
+        respuesta.setUbers(ubers);
+        return respuesta;
+        
+    }
+
+    
+    public boolean verificarPosicion(CoordenadaDto coordenada) {
+        
+        List<ZonaRestringida> zonas= this.zonaRestringidaRepository.findAll();
+        boolean bandera= true;
+        
+        for (ZonaRestringida zonaRestringida : zonas) {
+            if(this.calcularDistancia(zonaRestringida.getLat(), zonaRestringida.getLng(), coordenada.getLat(), coordenada.getLng())<=1){
+                return false;
+            }
+        }
+        return bandera;
+        
+    }
+
     public List<Uber> obtenerUbersCercanos(CoordenadaDto coordenadaDto) {
         double latitudRad = Math.toRadians(coordenadaDto.getLat());
         double longitudRad = Math.toRadians(coordenadaDto.getLng());
@@ -174,7 +294,7 @@ public class UberServiceImpl implements UberService{
 
         // Calcula la distancia; radio tierra=6371
         double distancia = 6371 * c;
-        System.out.println(distancia);
+        //System.out.println(distancia);
         return distancia;
     }
     

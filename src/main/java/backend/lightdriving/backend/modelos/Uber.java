@@ -43,6 +43,9 @@ public class Uber {
 
     private double lng;
 
+    @Column(name = "ubicacionnombre")
+    private String ubicacionNombre;
+
     @ManyToOne
     @JoinColumn(name = "idtipouber", referencedColumnName = "idtipouber")
     private TipoUber tipoUber;

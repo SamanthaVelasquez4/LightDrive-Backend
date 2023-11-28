@@ -64,28 +64,6 @@ public class ZonaRestringidaImpl implements ZonaRestringidaService{
     }
 
     @Override
-    public RespuestaDto verificarRuta(VerificarRutaDto ruta) {
-
-        CoordenadaDto coordenadaInicio = new CoordenadaDto(ruta.getLatInicio(), ruta.getLngInicio(), null);
-        CoordenadaDto coordenadaFinal = new CoordenadaDto(ruta.getLatFinal(), ruta.getLngFinal(), null);
-
-        //Verificar posicion de inicio
-        if(!verificarPosicion(coordenadaInicio)){
-            RespuestaDto respuesta= new RespuestaDto(false, "Punto de inicio ubicado en zona restringida");
-            return respuesta;
-        }
- 
-        if(!verificarPosicion(coordenadaFinal)){
-            RespuestaDto respuesta= new RespuestaDto(false, "Punto de destino ubicado en zona restringida");
-            return respuesta;
-        }
-
-        RespuestaDto respuesta= new RespuestaDto(true, "Ruta verificada y correcta");
-        return respuesta;
-        
-    }
-
-    @Override
     public boolean verificarPosicion(CoordenadaDto coordenada) {
         
         List<ZonaRestringida> zonas= this.zonaRestringidaRepository.findAll();
@@ -120,7 +98,7 @@ public class ZonaRestringidaImpl implements ZonaRestringidaService{
 
         // Calcula la distancia; radio tierra=6371
         double distancia = 6371 * c;
-        System.out.println(distancia);
+        //System.out.println(distancia);
         return distancia;
     }
 

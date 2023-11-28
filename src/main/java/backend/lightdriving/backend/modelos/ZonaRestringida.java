@@ -28,4 +28,7 @@ public class ZonaRestringida {
     private double lat;
 
     private double lng;
+
+    @Column(name = "ubicacionnombre")
+    private String ubicacionNombre;
 }
