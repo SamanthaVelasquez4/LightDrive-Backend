@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import backend.lightdriving.backend.dto.CoordenadaDto;
 import backend.lightdriving.backend.dto.FacturaDto;
 import backend.lightdriving.backend.dto.FacturasClienteDto;
 import backend.lightdriving.backend.dto.LoginDto;
@@ -48,7 +49,8 @@ public class ClienteServiceImpl implements ClienteService{
             for (Cliente cliente : clientes) {
                 if(cliente.getContrasena().equals(login.getContrasena()) && cliente.getCorreo().equals(login.getCorreo())){
                     List<Factura> facturas= this.facturaRepository.findAll();
-
+                    
+                    respuesta.setId(cliente.getIdCliente());
                     respuesta.setApellido(cliente.getApellido());
                     respuesta.setNombre(cliente.getNombre());
                     for (Factura factura : facturas) {
@@ -98,6 +100,7 @@ public class ClienteServiceImpl implements ClienteService{
             Cliente1.setCorreo(cliente.getCorreo());
             Cliente1.setTelefono(cliente.getTelefono());
             Cliente1.setFechaNacimiento(cliente.getFechaNacimiento());
+            Cliente1.setUbicacionNombre(cliente.getUbicacionNombre());
             clienteRepository.save(Cliente1);
             return true;
         }
@@ -126,6 +129,20 @@ public class ClienteServiceImpl implements ClienteService{
         }
 
         return null;
+    }
+
+    @Override
+    public CoordenadaDto obtenerUbicacion(int idCliente) {
+        CoordenadaDto ubicacion = new CoordenadaDto();
+
+        if(this.clienteRepository.existsById(idCliente)){
+            Cliente cliente= this.clienteRepository.findById(idCliente).get();
+            ubicacion.setLat(cliente.getLat());
+            ubicacion.setLng(cliente.getLng());
+            ubicacion.setUbicacionNombre(cliente.getUbicacionNombre());
+        }
+
+        return ubicacion;
     }
     
 }

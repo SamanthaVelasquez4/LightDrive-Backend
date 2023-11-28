@@ -2,6 +2,7 @@ package backend.lightdriving.backend.servicios;
 
 import java.util.List;
 
+import backend.lightdriving.backend.dto.CoordenadaDto;
 import backend.lightdriving.backend.dto.FacturasClienteDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;
@@ -18,6 +19,8 @@ public interface ClienteService {
     public boolean actualizarCliente(int idCliente, Cliente cliente);
 
     public Cliente obtenerCliente(int idCliente);
+
+    public CoordenadaDto obtenerUbicacion(int idCliente);
 
     public List<Carrera> obtenerCarreras(int idCliente);
 }

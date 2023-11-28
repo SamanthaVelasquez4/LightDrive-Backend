@@ -15,6 +15,8 @@ import lombok.Setter;
 
 public class FacturasClienteDto {
 
+    private int id;
+
     private String nombre;
 
     private String apellido;

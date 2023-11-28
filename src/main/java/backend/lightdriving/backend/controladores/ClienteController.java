@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.lightdriving.backend.dto.CoordenadaDto;
 import backend.lightdriving.backend.dto.FacturasClienteDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;
@@ -54,5 +55,10 @@ public class ClienteController {
     @GetMapping("/obtenerCarreras/{idCliente}")
     public List<Carrera> obtenerCarreras(@PathVariable (name = "idCliente" ) int idCliente){
         return this.clienteServiceImpl.obtenerCarreras(idCliente);
+    }
+
+    @GetMapping("/obtenerUbicacion/{idCliente}")
+    public CoordenadaDto obtenerUbicacion(int idCliente){
+        return this.obtenerUbicacion(idCliente);
     }
 }

@@ -15,4 +15,6 @@ public class CoordenadaDto {
     private double lat;
 
     private double lng;
+
+    private String ubicacionNombre;
 }

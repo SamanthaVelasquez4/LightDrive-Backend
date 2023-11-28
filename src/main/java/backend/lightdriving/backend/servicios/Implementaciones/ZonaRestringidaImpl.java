@@ -66,8 +66,8 @@ public class ZonaRestringidaImpl implements ZonaRestringidaService{
     @Override
     public RespuestaDto verificarRuta(VerificarRutaDto ruta) {
 
-        CoordenadaDto coordenadaInicio = new CoordenadaDto(ruta.getLatInicio(), ruta.getLngInicio());
-        CoordenadaDto coordenadaFinal = new CoordenadaDto(ruta.getLatFinal(), ruta.getLngFinal());
+        CoordenadaDto coordenadaInicio = new CoordenadaDto(ruta.getLatInicio(), ruta.getLngInicio(), null);
+        CoordenadaDto coordenadaFinal = new CoordenadaDto(ruta.getLatFinal(), ruta.getLngFinal(), null);
 
         //Verificar posicion de inicio
         if(!verificarPosicion(coordenadaInicio)){

@@ -47,6 +47,9 @@ public class Cliente {
 
     private double lng;
 
+    @Column(name = "ubicacionnombre")
+    private String ubicacionNombre;
+
     @OneToMany(mappedBy = "cliente")
     List<Carrera> carreras;
 }
