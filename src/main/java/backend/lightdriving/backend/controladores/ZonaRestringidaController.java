@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.lightdriving.backend.dto.CoordenadaDto;
-import backend.lightdriving.backend.dto.RespuestaDto;
-import backend.lightdriving.backend.dto.VerificarRutaDto;
 import backend.lightdriving.backend.modelos.ZonaRestringida;
 import backend.lightdriving.backend.servicios.Implementaciones.ZonaRestringidaImpl;
 

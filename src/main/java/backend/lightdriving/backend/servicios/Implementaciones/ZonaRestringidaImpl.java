@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import backend.lightdriving.backend.dto.CoordenadaDto;
-import backend.lightdriving.backend.dto.RespuestaDto;
-import backend.lightdriving.backend.dto.VerificarRutaDto;
 import backend.lightdriving.backend.modelos.ZonaRestringida;
 import backend.lightdriving.backend.repositorios.ZonaRestringidaRepository;
 import backend.lightdriving.backend.servicios.ZonaRestringidaService;

@@ -1,8 +1,6 @@
 package backend.lightdriving.backend.servicios;
 
 import backend.lightdriving.backend.dto.CoordenadaDto;
-import backend.lightdriving.backend.dto.RespuestaDto;
-import backend.lightdriving.backend.dto.VerificarRutaDto;
 import backend.lightdriving.backend.modelos.ZonaRestringida;
 
 public interface ZonaRestringidaService {
