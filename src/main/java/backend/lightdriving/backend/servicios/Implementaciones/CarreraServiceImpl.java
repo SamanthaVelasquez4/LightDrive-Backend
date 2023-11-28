@@ -126,15 +126,22 @@ public class CarreraServiceImpl implements CarreraService{
         if(this.carreraRepository.existsById(idCarrera)){
             Carrera carrera2= this.carreraRepository.findById(idCarrera).get();
             carrera2.setEstado(1);
-            carreraRepository.save(carrera2);
+            this.carreraRepository.save(carrera2);
 
             //cambiar estado del conductor
             Conductor conductor= carrera2.getConductor();
             conductor.setDisponible(true);
             conductor.getUber().setLat(carrera2.getLatFinal());
             conductor.getUber().setLng(carrera2.getLngFinal());
-
+            conductor.getUber().setUbicacionNombre(carrera2.getUbicacionFinal());
             this.conductorRepository.save(conductor);
+
+            //cambiar posicion del cliente
+            Cliente cliente = carrera2.getCliente();
+            cliente.setLat(carrera2.getLatFinal());
+            cliente.setLng(carrera2.getLngFinal());
+            cliente.setUbicacionNombre(carrera2.getUbicacionFinal());
+            this.clienteRepository.save(cliente);
 
             return true;
         }

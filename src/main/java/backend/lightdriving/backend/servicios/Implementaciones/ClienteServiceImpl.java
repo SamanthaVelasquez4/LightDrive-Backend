@@ -60,6 +60,7 @@ public class ClienteServiceImpl implements ClienteService{
                             facturaDto.setFecha(factura.getFecha());
                             facturaDto.setMetodoPago(factura.getMetodoPago().getDescripcion());
                             facturaDto.setTotal(factura.getTotal());
+                            facturaDto.setIdFactura(factura.getIdFactura());
                             if(factura.getCarrera().getEstado()==0){
                                 facturaDto.setEstadoCarrera("En progreso");
                             }else{
