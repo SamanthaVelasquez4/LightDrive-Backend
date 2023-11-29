@@ -33,8 +33,13 @@ public class ClienteController {
     }
 
     @GetMapping("/login")
-    public FacturasClienteDto login(@RequestBody LoginDto login){
+    public int login(@RequestBody LoginDto login){
         return this.clienteServiceImpl.login(login);
+    }
+
+    @GetMapping("/clienteInformacion/{id}")
+    public FacturasClienteDto clienteInformacion(@PathVariable (name = "id") int id){
+        return this.clienteServiceImpl.obtenerInformacion(id);
     }
 
     @DeleteMapping("/eliminar/{idCliente}")

@@ -39,9 +39,7 @@ public class ClienteServiceImpl implements ClienteService{
     }
     
     @Override
-    public FacturasClienteDto login(LoginDto login) {
-
-        FacturasClienteDto respuesta = new FacturasClienteDto();
+    public int login(LoginDto login) {
 
         if(login != null){
             
@@ -49,37 +47,17 @@ public class ClienteServiceImpl implements ClienteService{
 
             for (Cliente cliente : clientes) {
                 if(cliente.getContrasena().equals(login.getContrasena()) && cliente.getCorreo().equals(login.getCorreo())){
-                    List<Factura> facturas= this.facturaRepository.findAll();
-                    
-                    respuesta.setId(cliente.getIdCliente());
-                    respuesta.setApellido(cliente.getApellido());
-                    respuesta.setNombre(cliente.getNombre());
-                    for (Factura factura : facturas) {
-                        if(factura.getCarrera().getCliente().getIdCliente()== cliente.getIdCliente()){
-                            FacturaDto facturaDto= new FacturaDto();
-                            facturaDto.setCarrera(factura.getCarrera().getIdCarrera());
-                            SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
-                            facturaDto.setFecha(dt.format(factura.getFecha()));
-                            facturaDto.setMetodoPago(factura.getMetodoPago().getDescripcion());
-                            facturaDto.setTotal(factura.getTotal());
-                            facturaDto.setIdFactura(factura.getIdFactura());
-                            if(factura.getCarrera().getEstado()==0){
-                                facturaDto.setEstadoCarrera("En progreso");
-                            }else{
-                                facturaDto.setEstadoCarrera("Finalizado");
-                            }
-                            respuesta.getFacturas().add(facturaDto);
-                        }
-                    }
-                    return respuesta;
+                    return cliente.getIdCliente();
                 }
             }
             
         }
 
-        return respuesta;
+        return -1;
         
     }
+
+
 
     @Override
     public boolean eliminarCliente(int idCliente) {
@@ -146,6 +124,43 @@ public class ClienteServiceImpl implements ClienteService{
         }
 
         return ubicacion;
+    }
+
+    @Override
+    public FacturasClienteDto obtenerInformacion(int idCliente) {
+        FacturasClienteDto respuesta = new FacturasClienteDto();
+
+        if(this.clienteRepository.existsById(idCliente)){
+            Cliente cliente= this.clienteRepository.findById(idCliente).get();
+
+            List<Factura> facturas= this.facturaRepository.findAll();
+                    
+            respuesta.setId(cliente.getIdCliente());
+            respuesta.setApellido(cliente.getApellido());
+            respuesta.setNombre(cliente.getNombre());
+            for (Factura factura : facturas) {
+                if(factura.getCarrera().getCliente().getIdCliente()== cliente.getIdCliente()){
+                    FacturaDto facturaDto= new FacturaDto();
+                    facturaDto.setCarrera(factura.getCarrera().getIdCarrera());
+                    SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
+                    facturaDto.setFecha(dt.format(factura.getFecha()));
+                    facturaDto.setMetodoPago(factura.getMetodoPago().getDescripcion());
+                    facturaDto.setTotal(factura.getTotal());
+                    facturaDto.setIdFactura(factura.getIdFactura());
+                    if(factura.getCarrera().getEstado()==0){
+                        facturaDto.setEstadoCarrera("En progreso");
+                    }else{
+                        facturaDto.setEstadoCarrera("Finalizado");
+                    }
+                    respuesta.getFacturas().add(facturaDto);
+                }
+            }
+            return respuesta;
+
+        }
+
+        return respuesta;
+        
     }
     
 }
