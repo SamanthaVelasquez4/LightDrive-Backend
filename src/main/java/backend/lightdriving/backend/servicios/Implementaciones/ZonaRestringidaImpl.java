@@ -17,51 +17,6 @@ public class ZonaRestringidaImpl implements ZonaRestringidaService{
     private ZonaRestringidaRepository zonaRestringidaRepository;
 
     @Override
-    public boolean crearZonaRestringida(ZonaRestringida zonaRestringida) {
-        if(zonaRestringida != null){
-            this.zonaRestringidaRepository.save(zonaRestringida);
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean eliminarZonaRestringida(int idZonaRestringida) {
-
-        if(this.zonaRestringidaRepository.existsById(idZonaRestringida)){
-            this.zonaRestringidaRepository.deleteById(idZonaRestringida);
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean actualizarZonaRestringida(int idZonaRestringida, ZonaRestringida zonaRestringida) {
-        
-        if(zonaRestringida != null){
-            ZonaRestringida zonaActualizar= this.zonaRestringidaRepository.findById(idZonaRestringida).get();
-            zonaActualizar.setLat(zonaRestringida.getLat());
-            zonaActualizar.setLng(zonaRestringida.getLng());
-            this.zonaRestringidaRepository.save(zonaActualizar);
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public ZonaRestringida obtenerZonaRestringida(int idZonaRestringida) {
-        
-        if(this.zonaRestringidaRepository.existsById(idZonaRestringida)){
-            return this.zonaRestringidaRepository.findById(idZonaRestringida).get();
-        }
-
-        return null;
-    }
-
-    @Override
     public boolean verificarPosicion(CoordenadaDto coordenada) {
         
         List<ZonaRestringida> zonas= this.zonaRestringidaRepository.findAll();
