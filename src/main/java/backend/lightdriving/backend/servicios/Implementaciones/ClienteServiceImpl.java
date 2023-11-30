@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import backend.lightdriving.backend.dto.CoordenadaDto;
 import backend.lightdriving.backend.dto.LoginDto;
-import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Cliente;
 import backend.lightdriving.backend.repositorios.ClienteRepository;
 import backend.lightdriving.backend.servicios.ClienteService;
@@ -87,17 +86,6 @@ public class ClienteServiceImpl implements ClienteService{
             Cliente cliente= clienteRepository.findById(idCliente).get();
             cliente.setContrasena(null);
            return cliente;
-        }
-
-        return null;
-    }
-
-    @Override
-    public List<Carrera> obtenerCarreras(int idCliente) {
-        if(this.clienteRepository.existsById(idCliente)){
-
-           return clienteRepository.findById(idCliente).get().getCarreras();
-            
         }
 
         return null;
