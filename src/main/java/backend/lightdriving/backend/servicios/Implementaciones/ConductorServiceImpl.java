@@ -94,73 +94,82 @@ public class ConductorServiceImpl implements ConductorService{
     }
 
     @Override
-    public ConductorLoginDto login(LoginDto login) {
+    public int login(LoginDto login) {
         if(login != null){
             
             List<Conductor> conductores= this.conductorRepository.findAll();
-            ConductorLoginDto conductorLoginDto= new ConductorLoginDto();
+           
 
             for (Conductor conductor : conductores) {
                 if(conductor.getContrasena().equals(login.getContrasena()) && conductor.getCorreo().equals(login.getCorreo())){
-                    
-                    conductorLoginDto.setApellido(conductor.getApellido());
-                    conductorLoginDto.setIdConductor(conductor.getIdConductor());
-                    conductorLoginDto.setNombre(conductor.getNombre());
-
-                    List<Carrera> carreras= conductor.getCarreras();
-                    List<FacturaDto> facturas= new ArrayList<>();
-
-                    for (Carrera carrera : carreras) {
-                        
-                        //obtener carrera en progreso
-                        if(carrera.getEstado()==0){
-
-                            CarreraEnProgresoDto carreraEnProgresoDto = new CarreraEnProgresoDto();
-                            carreraEnProgresoDto.setFactura(carrera.getFactura());
-                            carreraEnProgresoDto.setLatFinal(carrera.getLatFinal());
-                            carreraEnProgresoDto.setLatInicio(carrera.getLatInicio());
-                            carreraEnProgresoDto.setLngFinal(carrera.getLngFinal());
-                            carreraEnProgresoDto.setLngInicio(carrera.getLngInicio());
-                            carreraEnProgresoDto.setUbicacionFinal(carrera.getUbicacionFinal());
-                            carreraEnProgresoDto.setUbicacionInicial(carrera.getUbicacionInicial());
-
-                            //cliente
-                            ClienteConductorDto clienteConductor = new ClienteConductorDto();
-                            Cliente cliente= carrera.getCliente();
-
-                            clienteConductor.setApellido(cliente.getApellido());
-                            clienteConductor.setIdCliente(cliente.getIdCliente());
-                            clienteConductor.setNombre(cliente.getNombre());
-                            clienteConductor.setTelefono(cliente.getTelefono());
-
-                            carreraEnProgresoDto.setCliente(clienteConductor);
-                            
-                            conductorLoginDto.setCarreraEnProgreso(carreraEnProgresoDto);
-
-                        }else{
-
-                            FacturaDto facturaDto= new FacturaDto();
-                            facturaDto.setCarrera(carrera.getIdCarrera());
-                            SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
-                            facturaDto.setFecha(dt.format(carrera.getFactura().getFecha()));
-                            facturaDto.setMetodoPago(carrera.getFactura().getMetodoPago().getDescripcion());
-                            facturaDto.setTotal(carrera.getFactura().getTotal());
-                            facturaDto.setIdFactura(carrera.getFactura().getIdFactura());
-                            facturaDto.setEstadoCarrera("Finalizado");
-                            facturas.add(facturaDto);
-                        }
-                    }
-
-                    conductorLoginDto.setFacturas(facturas);
-
-
-                    return conductorLoginDto;
+                    return conductor.getIdConductor(); 
                 }
             }
             
         }
 
-        return null;
+        return -1;
+    }
+
+    @Override
+    public ConductorLoginDto obtenerInfoPaginaPrincipal(int idConductor) {
+        ConductorLoginDto conductorLoginDto= new ConductorLoginDto();
+
+        if(this.conductorRepository.existsById(idConductor)){
+            Conductor conductor = this.conductorRepository.findById(idConductor).get();
+
+            conductorLoginDto.setApellido(conductor.getApellido());
+            conductorLoginDto.setIdConductor(conductor.getIdConductor());
+            conductorLoginDto.setNombre(conductor.getNombre());
+
+            List<Carrera> carreras= conductor.getCarreras();
+            List<FacturaDto> facturas= new ArrayList<>();
+
+            for (Carrera carrera : carreras) {
+                
+                //obtener carrera en progreso
+                if(carrera.getEstado()==0){
+
+                    CarreraEnProgresoDto carreraEnProgresoDto = new CarreraEnProgresoDto();
+                    carreraEnProgresoDto.setFactura(carrera.getFactura());
+                    carreraEnProgresoDto.setLatFinal(carrera.getLatFinal());
+                    carreraEnProgresoDto.setLatInicio(carrera.getLatInicio());
+                    carreraEnProgresoDto.setLngFinal(carrera.getLngFinal());
+                    carreraEnProgresoDto.setLngInicio(carrera.getLngInicio());
+                    carreraEnProgresoDto.setUbicacionFinal(carrera.getUbicacionFinal());
+                    carreraEnProgresoDto.setUbicacionInicial(carrera.getUbicacionInicial());
+
+                    //cliente
+                    ClienteConductorDto clienteConductor = new ClienteConductorDto();
+                    Cliente cliente= carrera.getCliente();
+
+                    clienteConductor.setApellido(cliente.getApellido());
+                    clienteConductor.setIdCliente(cliente.getIdCliente());
+                    clienteConductor.setNombre(cliente.getNombre());
+                    clienteConductor.setTelefono(cliente.getTelefono());
+
+                    carreraEnProgresoDto.setCliente(clienteConductor);
+                    
+                    conductorLoginDto.setCarreraEnProgreso(carreraEnProgresoDto);
+
+                }else{
+
+                    FacturaDto facturaDto= new FacturaDto();
+                    facturaDto.setCarrera(carrera.getIdCarrera());
+                    SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
+                    facturaDto.setFecha(dt.format(carrera.getFactura().getFecha()));
+                    facturaDto.setMetodoPago(carrera.getFactura().getMetodoPago().getDescripcion());
+                    facturaDto.setTotal(carrera.getFactura().getTotal());
+                    facturaDto.setIdFactura(carrera.getFactura().getIdFactura());
+                    facturaDto.setEstadoCarrera("Finalizado");
+                    facturas.add(facturaDto);
+                }
+            }
+
+            conductorLoginDto.setFacturas(facturas);
+        }
+
+        return conductorLoginDto;
     }
 
     @Override
@@ -193,29 +202,5 @@ public class ConductorServiceImpl implements ConductorService{
         
         return false;
     }
-
-    @Override
-    public Conductor obtenerConductor(int idConductor) {
-        if(this.conductorRepository.existsById(idConductor)){
-            Conductor conductor= this.conductorRepository.findById(idConductor).get();
-            conductor.setContrasena(null);
-            return conductor;
-        }
-        
-        return null;
-    }
-
-    @Override
-    public List<Carrera> obtenerCarreras(int idConductor) {
-        if(this.conductorRepository.existsById(idConductor)){
-
-            return conductorRepository.findById(idConductor).get().getCarreras();
-             
-         }
- 
-         return null;
-    }
-
-    
 
 }
