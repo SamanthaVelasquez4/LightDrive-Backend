@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import backend.lightdriving.backend.dto.ActualizarUberDto;
 import backend.lightdriving.backend.dto.CoordenadaDto;
 import backend.lightdriving.backend.dto.RespuestaDto;
 import backend.lightdriving.backend.dto.UberCercanoDto;
@@ -42,36 +41,6 @@ public class UberServiceImpl implements UberService{
 
     @Autowired
     private ZonaRestringidaRepository zonaRestringidaRepository;
-
-    @Override
-    public boolean actualizarUber(int idUber, ActualizarUberDto uber) {
-
-        if(this.uberRepository.existsById(idUber) && this.tipoUberRepository.existsById(uber.getTipoUber())){
-
-            TipoUber tipoUberEncontrado= this.tipoUberRepository.findById(uber.getTipoUber()).get();
-            Uber uberActual= this.uberRepository.findById(idUber).get();
-
-            
-            uberActual.setColor(uber.getColor());
-            uberActual.setTipoUber(tipoUberEncontrado);
-
-            //Cambiar color en el historico
-            List<HistoricoUber> historicos= this.historicoUberRepository.findAll();
-
-            for (HistoricoUber historicoUber : historicos) {
-                if(historicoUber.getPlaca().equals(uberActual.getPlaca())){
-                    historicoUber.setColor(uber.getColor());
-                    this.historicoUberRepository.save(historicoUber);
-                }
-            }
-
-            this.uberRepository.save(uberActual);
-            return true;
-
-        }
-        
-        return false;
-    }
 
     @Override
     public Uber obtenerUber(int idUber) {
