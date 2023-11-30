@@ -26,4 +26,6 @@ public class ConductorCarreraDto {
 
     private String placa;
 
+    private String tipoUber;
+
 }

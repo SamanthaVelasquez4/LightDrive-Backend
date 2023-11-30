@@ -185,6 +185,7 @@ public class CarreraServiceImpl implements CarreraService{
             conductorCarreraDto.setNombre(conductor.getNombre());
             conductorCarreraDto.setPlaca(conductor.getUber().getPlaca());
             conductorCarreraDto.setTelefono(conductor.getTelefono());
+            conductorCarreraDto.setTipoUber(conductor.getUber().getTipoUber().getDescripcion());
 
             carreraClienteDto.setConductor(conductorCarreraDto);
 
