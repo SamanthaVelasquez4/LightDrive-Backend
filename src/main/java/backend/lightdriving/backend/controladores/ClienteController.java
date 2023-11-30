@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.lightdriving.backend.dto.CoordenadaDto;
-import backend.lightdriving.backend.dto.FacturasClienteDto;
 import backend.lightdriving.backend.dto.LoginDto;
 import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Cliente;
@@ -35,11 +34,6 @@ public class ClienteController {
     @GetMapping("/login")
     public int login(@RequestBody LoginDto login){
         return this.clienteServiceImpl.login(login);
-    }
-
-    @GetMapping("/clienteInformacion/{id}")
-    public FacturasClienteDto clienteInformacion(@PathVariable (name = "id") int id){
-        return this.clienteServiceImpl.obtenerInformacion(id);
     }
 
     @DeleteMapping("/eliminar/{idCliente}")

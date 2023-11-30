@@ -47,7 +47,7 @@ public class FacturaServiceImpl implements FacturaService {
             List<Factura> facturas= this.facturaRepository.findAll();
             Cliente cliente = this.clienteRepository.findById(idCliente).get();
             
-
+            respuesta.setId(cliente.getIdCliente());
             respuesta.setApellido(cliente.getApellido());
             respuesta.setNombre(cliente.getNombre());
 
@@ -59,6 +59,7 @@ public class FacturaServiceImpl implements FacturaService {
                     facturaDto.setFecha(dt.format(factura.getFecha()));
                     facturaDto.setMetodoPago(factura.getMetodoPago().getDescripcion());
                     facturaDto.setTotal(factura.getTotal());
+                    facturaDto.setIdFactura(factura.getIdFactura());
                     if(factura.getCarrera().getEstado()==0){
                         facturaDto.setEstadoCarrera("En progreso");
                     }else{
