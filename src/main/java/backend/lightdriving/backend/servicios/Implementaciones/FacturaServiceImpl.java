@@ -39,17 +39,6 @@ public class FacturaServiceImpl implements FacturaService {
     }
 
     @Override
-    public Factura obtenerFactura(int idFactura) {
-
-        if(this.facturaRepository.existsById(idFactura)){
-            return facturaRepository.findById(idFactura).get();
-        }
-
-        return null;
-        
-    }
-
-    @Override
     public FacturasClienteDto obtenerFacturasCliente(int idCliente) {
 
         FacturasClienteDto respuesta = new FacturasClienteDto();
