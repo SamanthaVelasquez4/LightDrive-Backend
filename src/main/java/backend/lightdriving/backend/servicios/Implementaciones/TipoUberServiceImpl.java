@@ -1,5 +1,7 @@
 package backend.lightdriving.backend.servicios.Implementaciones;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,11 @@ public class TipoUberServiceImpl implements TipoUberService{
         }
 
         return null;
+    }
+
+    @Override
+    public List<TipoUber> obtenerTodos() {
+       return this.TipoUberRepository.findAll();
     }
     
 }

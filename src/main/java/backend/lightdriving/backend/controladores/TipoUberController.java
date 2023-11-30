@@ -1,5 +1,8 @@
 package backend.lightdriving.backend.controladores;
 
+import java.util.List;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,4 +24,8 @@ public class TipoUberController {
         return this.tipoUberServiceImpl.obtenerTipoUber(idTipoUber);
     }
 
+    @GetMapping("/obtener/todos")
+    public List<TipoUber> obtenerTodos(){
+        return this.tipoUberServiceImpl.obtenerTodos();
+    }
 }
