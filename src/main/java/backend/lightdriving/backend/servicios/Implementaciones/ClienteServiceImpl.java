@@ -1,21 +1,14 @@
 package backend.lightdriving.backend.servicios.Implementaciones;
 
-
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import backend.lightdriving.backend.dto.CoordenadaDto;
-import backend.lightdriving.backend.dto.FacturaDto;
-import backend.lightdriving.backend.dto.FacturasClienteDto;
 import backend.lightdriving.backend.dto.LoginDto;
-import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Cliente;
-import backend.lightdriving.backend.modelos.Factura;
 import backend.lightdriving.backend.repositorios.ClienteRepository;
-import backend.lightdriving.backend.repositorios.FacturaRepository;
 import backend.lightdriving.backend.servicios.ClienteService;
 
 @Service
@@ -23,9 +16,6 @@ public class ClienteServiceImpl implements ClienteService{
 
     @Autowired
     ClienteRepository clienteRepository;
-
-    @Autowired 
-    private FacturaRepository facturaRepository;
 
     @Override
     public boolean crearCliente(Cliente cliente) {
@@ -102,17 +92,6 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
-    public List<Carrera> obtenerCarreras(int idCliente) {
-        if(this.clienteRepository.existsById(idCliente)){
-
-           return clienteRepository.findById(idCliente).get().getCarreras();
-            
-        }
-
-        return null;
-    }
-
-    @Override
     public CoordenadaDto obtenerUbicacion(int idCliente) {
         CoordenadaDto ubicacion = new CoordenadaDto();
 
@@ -124,43 +103,6 @@ public class ClienteServiceImpl implements ClienteService{
         }
 
         return ubicacion;
-    }
-
-    @Override
-    public FacturasClienteDto obtenerInformacion(int idCliente) {
-        FacturasClienteDto respuesta = new FacturasClienteDto();
-
-        if(this.clienteRepository.existsById(idCliente)){
-            Cliente cliente= this.clienteRepository.findById(idCliente).get();
-
-            List<Factura> facturas= this.facturaRepository.findAll();
-                    
-            respuesta.setId(cliente.getIdCliente());
-            respuesta.setApellido(cliente.getApellido());
-            respuesta.setNombre(cliente.getNombre());
-            for (Factura factura : facturas) {
-                if(factura.getCarrera().getCliente().getIdCliente()== cliente.getIdCliente()){
-                    FacturaDto facturaDto= new FacturaDto();
-                    facturaDto.setCarrera(factura.getCarrera().getIdCarrera());
-                    SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
-                    facturaDto.setFecha(dt.format(factura.getFecha()));
-                    facturaDto.setMetodoPago(factura.getMetodoPago().getDescripcion());
-                    facturaDto.setTotal(factura.getTotal());
-                    facturaDto.setIdFactura(factura.getIdFactura());
-                    if(factura.getCarrera().getEstado()==0){
-                        facturaDto.setEstadoCarrera("En progreso");
-                    }else{
-                        facturaDto.setEstadoCarrera("Finalizado");
-                    }
-                    respuesta.getFacturas().add(facturaDto);
-                }
-            }
-            return respuesta;
-
-        }
-
-        return respuesta;
-        
     }
     
 }

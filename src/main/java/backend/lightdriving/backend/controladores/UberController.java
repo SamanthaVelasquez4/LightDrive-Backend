@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import backend.lightdriving.backend.dto.ActualizarUberDto;
 import backend.lightdriving.backend.dto.RespuestaDto;
 import backend.lightdriving.backend.dto.UberDto;
 import backend.lightdriving.backend.dto.VerificarRutaDto;
@@ -22,11 +21,6 @@ public class UberController {
     
     @Autowired
     private UberServiceImpl uberServiceImpl;
-
-    @PutMapping("/actualizar/{idUber}")
-    public boolean actualizarUber(@PathVariable (name = "idUber") int idUber, @RequestBody ActualizarUberDto uber){
-        return this.uberServiceImpl.actualizarUber(idUber, uber);
-    }
 
     @GetMapping("/obtener/{idUber}")
     public Uber obtenerUber(@PathVariable (name = "idUber") int idUber){

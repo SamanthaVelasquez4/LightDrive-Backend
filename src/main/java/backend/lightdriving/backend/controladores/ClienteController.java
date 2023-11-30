@@ -1,7 +1,5 @@
 package backend.lightdriving.backend.controladores;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.lightdriving.backend.dto.CoordenadaDto;
-import backend.lightdriving.backend.dto.FacturasClienteDto;
 import backend.lightdriving.backend.dto.LoginDto;
-import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Cliente;
 import backend.lightdriving.backend.servicios.Implementaciones.ClienteServiceImpl;
 
@@ -37,11 +33,6 @@ public class ClienteController {
         return this.clienteServiceImpl.login(login);
     }
 
-    @GetMapping("/clienteInformacion/{id}")
-    public FacturasClienteDto clienteInformacion(@PathVariable (name = "id") int id){
-        return this.clienteServiceImpl.obtenerInformacion(id);
-    }
-
     @DeleteMapping("/eliminar/{idCliente}")
     public boolean eliminarCliente(@PathVariable (name = "idCliente" ) int idCliente){
         return this.clienteServiceImpl.eliminarCliente(idCliente);
@@ -55,11 +46,6 @@ public class ClienteController {
     @GetMapping("/obtener/{idCliente}")
     public Cliente obtenerCliente(@PathVariable (name = "idCliente" ) int idCliente){
         return this.clienteServiceImpl.obtenerCliente(idCliente);
-    }
-
-    @GetMapping("/obtenerCarreras/{idCliente}")
-    public List<Carrera> obtenerCarreras(@PathVariable (name = "idCliente" ) int idCliente){
-        return this.clienteServiceImpl.obtenerCarreras(idCliente);
     }
 
     @GetMapping("/obtenerUbicacion/{idCliente}")
