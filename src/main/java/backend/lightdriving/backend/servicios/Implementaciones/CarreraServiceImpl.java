@@ -1,13 +1,17 @@
 package backend.lightdriving.backend.servicios.Implementaciones;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import backend.lightdriving.backend.dto.CarreraClienteDto;
+import backend.lightdriving.backend.dto.CarreraConductorDto;
 import backend.lightdriving.backend.dto.CarreraDto;
+import backend.lightdriving.backend.dto.ClienteConductorDto;
+import backend.lightdriving.backend.dto.ConductorCarreraDto;
 import backend.lightdriving.backend.modelos.Carrera;
 import backend.lightdriving.backend.modelos.Cliente;
 import backend.lightdriving.backend.modelos.Conductor;
@@ -92,15 +96,6 @@ public class CarreraServiceImpl implements CarreraService{
     }
 
     @Override
-    public Carrera obtenerCarrera(int idCarrera) {
-        if(this.carreraRepository.existsById(idCarrera)){
-            return this.carreraRepository.findById(idCarrera).get();
-        }
-
-        return null;
-    }
-
-    @Override
     public boolean eliminarCarrera(int idCarrera) {
         if(this.carreraRepository.existsById(idCarrera)){
             this.carreraRepository.deleteById(idCarrera);
@@ -173,7 +168,78 @@ public class CarreraServiceImpl implements CarreraService{
     }
 
     @Override
-    public List<Carrera> obtenerTodo() {
-        return this.carreraRepository.findAll();
+    public CarreraClienteDto obtenerDetalleCarreraCliente(int idCarrera) {
+        CarreraClienteDto carreraClienteDto = new CarreraClienteDto();
+
+        if(this.carreraRepository.existsById(idCarrera)){
+            Carrera carrera = this.carreraRepository.findById(idCarrera).get();
+            Conductor conductor= carrera.getConductor();
+
+            ConductorCarreraDto conductorCarreraDto= new ConductorCarreraDto();
+
+            //llenar conductor
+            conductorCarreraDto.setApellido(conductor.getApellido());
+            conductorCarreraDto.setColor(conductor.getUber().getColor());
+            conductorCarreraDto.setIdConductor(conductor.getIdConductor());
+            conductorCarreraDto.setMarca(conductor.getUber().getMarca());
+            conductorCarreraDto.setNombre(conductor.getNombre());
+            conductorCarreraDto.setPlaca(conductor.getUber().getPlaca());
+            conductorCarreraDto.setTelefono(conductor.getTelefono());
+
+            carreraClienteDto.setConductor(conductorCarreraDto);
+
+            if(carrera.getEstado()==0){
+                carreraClienteDto.setEstadoCarrera("En progreso");
+            }else{
+                carreraClienteDto.setEstadoCarrera("Finalizado");
+            }
+            SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
+            carreraClienteDto.setFecha(dt.format(carrera.getFactura().getFecha()));
+            carreraClienteDto.setIdCarrera(carrera.getIdCarrera());
+            carreraClienteDto.setMetodoPago(carrera.getFactura().getMetodoPago().getDescripcion());
+            carreraClienteDto.setTotal(carrera.getFactura().getTotal());
+            carreraClienteDto.setUbicacionFinal(carrera.getUbicacionFinal());
+            carreraClienteDto.setUbicacionInicial(carrera.getUbicacionInicial());
+            
+        }
+
+        return carreraClienteDto;
+    }
+
+    @Override
+    public CarreraConductorDto obtenerDetalleCarreraConductor(int idCarrera) {
+        CarreraConductorDto carreraConductorDto= new CarreraConductorDto();
+
+        if(this.carreraRepository.existsById(idCarrera)){
+            Carrera carrera = this.carreraRepository.findById(idCarrera).get();
+            Cliente cliente= carrera.getCliente();
+
+            ClienteConductorDto clienteConductorDto= new ClienteConductorDto();
+
+
+            //llenar cliente
+            clienteConductorDto.setApellido(cliente.getApellido());
+            clienteConductorDto.setIdCliente(cliente.getIdCliente());
+            clienteConductorDto.setNombre(cliente.getNombre());
+            clienteConductorDto.setTelefono(cliente.getTelefono());  
+            
+            carreraConductorDto.setCliente(clienteConductorDto);
+
+            if(carrera.getEstado()==0){
+                carreraConductorDto.setEstadoCarrera("En progreso");
+            }else{
+                carreraConductorDto.setEstadoCarrera("Finalizado");
+            }
+            SimpleDateFormat dt= new SimpleDateFormat("yyyy-MM-dd");
+            carreraConductorDto.setFecha(dt.format(carrera.getFactura().getFecha()));
+            carreraConductorDto.setIdCarrera(carrera.getIdCarrera());
+            carreraConductorDto.setMetodoPago(carrera.getFactura().getMetodoPago().getDescripcion());
+            carreraConductorDto.setTotal(carrera.getFactura().getTotal());
+            carreraConductorDto.setUbicacionFinal(carrera.getUbicacionFinal());
+            carreraConductorDto.setUbicacionInicial(carrera.getUbicacionInicial());
+            
+        }
+
+        return carreraConductorDto;
     }
 }

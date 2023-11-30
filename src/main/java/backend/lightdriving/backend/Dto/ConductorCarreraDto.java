@@ -1,29 +1,29 @@
 package backend.lightdriving.backend.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ActualizarConductorDto {
+public class ConductorCarreraDto {
     
+    private int idConductor;
+
     private String nombre;
 
     private String apellido;
 
-    private String correo;
-
     private String telefono;
 
-    private Date fechaNacimiento;
+    private String marca;
 
-    private String contrasena;
+    private String color;
+
+    private String placa;
 
 }

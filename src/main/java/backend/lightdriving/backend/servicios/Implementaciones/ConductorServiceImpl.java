@@ -195,6 +195,7 @@ public class ConductorServiceImpl implements ConductorService{
             Conductor1.setCorreo(actualizar.getCorreo());
             Conductor1.setTelefono(actualizar.getTelefono());
             Conductor1.setFechaNacimiento(actualizar.getFechaNacimiento());
+            Conductor1.setContrasena(actualizar.getContrasena());
             conductorRepository.save(Conductor1);
             return true;
             
