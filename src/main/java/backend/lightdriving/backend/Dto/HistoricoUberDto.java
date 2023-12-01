@@ -15,6 +15,12 @@ import lombok.Setter;
 
 public class HistoricoUberDto {
 
+    private int idConductor;
+
+    private String nombre;
+
+    private String apellido;
+
     HistoricoUber uberActual;
 
     List<HistoricoUber> historicoUbers;

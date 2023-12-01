@@ -176,6 +176,17 @@ public class ConductorServiceImpl implements ConductorService{
     public boolean eliminarConductor(int idConductor) {
 
         if(this.conductorRepository.existsById(idConductor)){
+            //poner fecha final en el historico
+            List<HistoricoUber> historicos= this.historicoUberRepository.findAll();
+            Date fechaActual= new Date();
+            Uber uber= this.conductorRepository.findById(idConductor).get().getUber();
+
+            for (HistoricoUber historicoUber : historicos) {
+                if(historicoUber.getPlaca().equals(uber.getPlaca())){
+                    historicoUber.setFechaFinal(fechaActual);
+                    this.historicoUberRepository.save(historicoUber);
+                }
+            }
             this.conductorRepository.deleteById(idConductor);
             return true;     
         }
