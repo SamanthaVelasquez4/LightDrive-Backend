@@ -28,4 +28,6 @@ public class CarreraEnProgresoDto {
     private Factura factura;
 
     private ClienteConductorDto cliente;
+
+    private int idCarrera;
 }

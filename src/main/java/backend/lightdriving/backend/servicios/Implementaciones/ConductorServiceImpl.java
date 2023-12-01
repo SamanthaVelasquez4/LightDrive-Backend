@@ -138,6 +138,7 @@ public class ConductorServiceImpl implements ConductorService{
                     carreraEnProgresoDto.setLngInicio(carrera.getLngInicio());
                     carreraEnProgresoDto.setUbicacionFinal(carrera.getUbicacionFinal());
                     carreraEnProgresoDto.setUbicacionInicial(carrera.getUbicacionInicial());
+                    carreraEnProgresoDto.setIdCarrera(carrera.getIdCarrera());
 
                     //cliente
                     ClienteConductorDto clienteConductor = new ClienteConductorDto();
