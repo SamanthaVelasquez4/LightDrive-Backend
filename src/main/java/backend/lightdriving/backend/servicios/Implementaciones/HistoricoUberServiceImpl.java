@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import backend.lightdriving.backend.dto.HistoricoUberDto;
 import backend.lightdriving.backend.modelos.HistoricoUber;
+import backend.lightdriving.backend.repositorios.ConductorRepository;
 import backend.lightdriving.backend.repositorios.HistoricoUberRepository;
 import backend.lightdriving.backend.servicios.HistoricoUberService;
 
@@ -15,6 +17,9 @@ public class HistoricoUberServiceImpl implements HistoricoUberService{
 
     @Autowired
     private HistoricoUberRepository historicoUberRepository;
+
+    @Autowired
+    private ConductorRepository conductorRepository;
 
     @Override
     public HistoricoUber obtenerHistoricoUber(int idHistoricoUber) {
@@ -27,18 +32,28 @@ public class HistoricoUberServiceImpl implements HistoricoUberService{
     }
 
     @Override
-    public List<HistoricoUber> obtenerHistoricosConductor(int idConductor) {
+    public HistoricoUberDto obtenerHistoricosConductor(int idConductor) {
 
         List<HistoricoUber> todos= this.historicoUberRepository.findAll();
         List<HistoricoUber> historicoConductor= new ArrayList<>();
+        String placaUberActual= this.conductorRepository.findById(idConductor).get().getUber().getPlaca();
+
+        HistoricoUberDto respuesta= new HistoricoUberDto();
 
         for (HistoricoUber historicoUber : todos) {
             if(historicoUber.getConductor().getIdConductor()==idConductor){
-                historicoConductor.add(historicoUber);
+                if(historicoUber.getPlaca().equals(placaUberActual)){
+                    respuesta.setUberActual(historicoUber);
+                }else{
+                    historicoConductor.add(historicoUber);
+                }
+                
             }
         }
 
-        return historicoConductor;
+        respuesta.setHistoricoUbers(historicoConductor);
+
+        return respuesta;
     }
 
 
