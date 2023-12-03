@@ -21,6 +21,8 @@ public class ConductorLoginDto {
 
     private String apellido;
 
+    private int idUber;
+
     private CarreraEnProgresoDto carreraEnProgreso;
 
     private List<FacturaDto> facturas = new ArrayList<>();

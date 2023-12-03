@@ -121,6 +121,7 @@ public class ConductorServiceImpl implements ConductorService{
             conductorLoginDto.setApellido(conductor.getApellido());
             conductorLoginDto.setIdConductor(conductor.getIdConductor());
             conductorLoginDto.setNombre(conductor.getNombre());
+            conductorLoginDto.setIdUber(conductor.getUber().getIdUber());
 
             List<Carrera> carreras= conductor.getCarreras();
             List<FacturaDto> facturas= new ArrayList<>();
