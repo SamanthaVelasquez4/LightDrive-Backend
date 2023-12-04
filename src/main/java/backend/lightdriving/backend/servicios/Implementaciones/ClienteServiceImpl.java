@@ -73,6 +73,8 @@ public class ClienteServiceImpl implements ClienteService{
             Cliente1.setFechaNacimiento(cliente.getFechaNacimiento());
             Cliente1.setUbicacionNombre(cliente.getUbicacionNombre());
             Cliente1.setContrasena(cliente.getContrasena());
+            Cliente1.setLat(cliente.getLat());
+            Cliente1.setLng(cliente.getLng());
             clienteRepository.save(Cliente1);
             return true;
         }
